@@ -1,0 +1,329 @@
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.preprocessing.image import
+ImageDataGenerator
+from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras import layers
+import matplotlib.pyplot as plt
+DATASET_DIR = &#39;/content/drive/MyDrive/symptom/&#39;
+train_path             =
+&quot;/content/drive/MyDrive/symptom/train&quot;
+test_path              =
+&quot;/content/drive/MyDrive/symptom/test&quot;
+from skimage import data, exposure, img_as_float
+train_image_generator = ImageDataGenerator(
+    rotation_range=25, width_shift_range=0.1,
+    height_shift_range=0.1, shear_range=0.2,  
+    horizontal_flip=True, 
+    fill_mode=&quot;nearest&quot;,
+    rescale = 1.0/255)
+test_image_generator = ImageDataGenerator(
+    rescale = 1.0/255)
+val_image_generator = ImageDataGenerator(
+    rescale = 1.0/255)
+training_iterator=[]
+training_iterator =
+train_image_generator.flow_from_directory(&#39;/content/drive/M
+yDrive/symptom/train&#39;,
+target_size = (224, 224),
+batch_size = 16)
+print(type(training_iterator))
+import os
+import sys
+import cv2
+import random
+import numpy as np
+
+
+
+from tqdm import tqdm
+import pickle
+from keras.models import Sequential 
+from keras.layers import Conv2D, MaxPooling2D 
+from keras.layers import Activation, Dropout, Flatten,
+Dense
+from keras.callbacks import TensorBoard, EarlyStopping,
+ModelCheckpoint
+import matplotlib.pyplot as plt
+test_iterator =
+test_image_generator.flow_from_directory(&#39;/content/drive/My
+Drive/symptom/test&#39;,
+target_size = (224, 224),
+batch_size = 16)
+import keras
+import keras.backend as K
+from keras.models import Model
+from keras.layers.core import
+Dense,Dropout,Activation,Flatten,Lambda
+from keras.layers import Input, Dense, Conv2D, Conv3D,
+DepthwiseConv2D, SeparableConv2D, Conv3DTranspose
+from keras.layers import Flatten, MaxPool2D, AvgPool2D,
+GlobalAvgPool2D, UpSampling2D, BatchNormalization
+from keras.layers import Concatenate, Add, Dropout, ReLU,
+Lambda, Activation
+from keras.layers import LeakyReLU
+from keras.preprocessing.image import ImageDataGenerator
+from keras.applications import densenet
+from keras.models import Sequential, Model, load_model
+from keras.layers import Conv2D, MaxPooling2D
+from keras.layers import Activation, Dropout, Flatten,
+Dense
+from keras.callbacks import EarlyStopping,
+ReduceLROnPlateau, ModelCheckpoint, Callback
+from keras import regularizers
+from keras import backend as K
+X = np.array(images)
+X1 = np.array(testimages)
+x_train = X
+y_train = Y
+x_test = X
+y_test = Y
+
+from keras.preprocessing.image import ImageDataGenerator
+from keras.applications import densenet
+
+
+
+from keras.models import Sequential, Model, load_model
+from keras.layers import Conv2D, MaxPooling2D
+from keras.layers import Activation, Dropout, Flatten,
+Dense
+from keras.callbacks import EarlyStopping,
+ReduceLROnPlateau, ModelCheckpoint, Callback
+from keras import regularizers
+from keras import backend as K
+from keras.applications.densenet import DenseNet121
+IMAGE_SIZE = [224, 224]
+from tensorflow.keras.applications.inception_v3 import
+InceptionV3
+inception = InceptionV3(input_shape=IMAGE_SIZE + [3],
+weights=&#39;imagenet&#39;, include_top=False)
+for layer in inception.layers:
+    layer.trainable = False
+x = Flatten()(inception.output)
+prediction = Dense(5, activation=&#39;softmax&#39;)(x)
+model = Model(inputs=inception.input, outputs=prediction)
+model.summary()
+model.compile(
+optimizer = tf.keras.optimizers.Adam(learning_rate =
+0.0001),
+loss = tf.keras.losses.categorical_crossentropy,
+metrics = [&#39;accuracy&#39;])
+model.summary()
+hist = model.fit(training_iterator,batch_size=32,
+          epochs=10,verbose=1,shuffle=True,validation_data=tes
+t_iterator)
+import tensorflow 
+import pandas as pd
+import numpy as np
+import os
+import keras
+import random
+import cv2
+import math
+import seaborn as sns
+from sklearn.metrics import confusion_matrix
+
+
+
+from sklearn.metrics import classification_report
+from sklearn.preprocessing import LabelBinarizer
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+from tensorflow.keras.layers import
+Dense,GlobalAveragePooling2D,Convolution2D,BatchNormalizati
+on
+from tensorflow.keras.layers import
+Flatten,MaxPooling2D,Dropout,Input
+from tensorflow.keras.applications import DenseNet121
+from tensorflow.keras.applications.densenet import
+preprocess_input
+from tensorflow.keras.preprocessing import image
+from tensorflow.keras.preprocessing.image import
+ImageDataGenerator,img_to_array
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.callbacks import ModelCheckpoint,
+ReduceLROnPlateau
+import warnings
+warnings.filterwarnings(&quot;ignore&quot;)
+from tensorflow.keras.applications import DenseNet121
+val_iterator =
+val_image_generator.flow_from_directory(&#39;/content/drive/MyD
+rive/symptom/val&#39;,
+target_size = (224, 224),
+batch_size = 16)
+print(training_iterator)
+history = model.fit(training_iterator, epochs = 5, 
+validation_data=val_iterator)
+import numpy as np 
+import pandas as pd 
+import cv2
+import matplotlib.pyplot as plt
+import seaborn as sn
+import pandas as pd
+import pickle
+import csv
+
+from sklearn.metrics import confusion_matrix,
+classification_report
+import tensorflow as tf
+from PIL import Image
+import os
+import cv2
+path_to_dataset =
+os.listdir(&#39;/content/drive/MyDrive/symptom/train&#39;)
+path = &#39;/content/drive/MyDrive/symptom/train&#39;
+image_size=224
+images = []
+labels = []
+for i in path_to_dataset:
+  data_path = path+&#39;/&#39; + str(i)
+  filename = [i for i in os.listdir(data_path)]
+  for f in filename:
+    image = cv2.imread(data_path+&#39;/&#39;+f)
+    image = cv2.resize(image, (image_size,image_size))
+    images.append(image)
+    labels.append(i)
+images = np.array(images)
+images.shape
+rows = []
+for item in path_to_dataset:
+  all_items =
+os.listdir(&#39;/content/drive/MyDrive/symptom/train&#39;+&#39;/&#39;+item)
+  for inner in all_items:
+    rows.append((item,str(&#39;/content/drive/MyDrive/symptom/trai
+n&#39;+&#39;/&#39;+item)+&#39;/&#39;+inner))
+leaf_df = pd.DataFrame(data=rows, columns =
+[&#39;dis_type&#39;,&#39;image&#39;])
+print(leaf_df.tail())
+from sklearn.preprocessing import LabelEncoder,
+OneHotEncoder
+y_name = leaf_df[&#39;dis_type&#39;].values
+y = leaf_df[&#39;dis_type&#39;].values
+y_label = LabelEncoder ()
+y = y_label.fit_transform (y)
+y.shape 
+y = y.reshape(-1,1)
+
+
+onehot = OneHotEncoder(sparse=True)
+Y = onehot.fit_transform(y)
+Y.shape
+import cv2
+path_to_dataset =
+os.listdir(&#39;/content/drive/MyDrive/symptom/test&#39;)
+path = &#39;/content/drive/MyDrive/symptom/test&#39;
+image_size=224
+testimages = []
+labels = []
+for i in path_to_dataset:
+  data_path = path+&#39;/&#39; + str(i)
+  filename = [i for i in os.listdir(data_path)]
+  for f in filename:
+    image = cv2.imread(data_path+&#39;/&#39;+f)
+    image = cv2.resize(image, (image_size,image_size))
+    testimages.append(image)
+    labels.append(i)
+testimages = np.array(testimages)
+testimages.shape
+rows = []
+for item in path_to_dataset:
+  all_items =
+os.listdir(&#39;/content/drive/MyDrive/symptom/test&#39;+&#39;/&#39;+item)
+  for inner in all_items:
+    rows.append((item,str(&#39;/content/drive/MyDrive/symptom/test
+&#39;+&#39;/&#39;+item)+&#39;/&#39;+inner))
+leaf_df = pd.DataFrame(data=rows, columns =
+[&#39;dis_type&#39;,&#39;image&#39;])
+print(leaf_df.tail())
+from sklearn.preprocessing import LabelEncoder,
+OneHotEncoder
+y1 = leaf_df[&#39;dis_type&#39;].values
+y_label = LabelEncoder ()
+y1 = y_label.fit_transform (y1)
+y1.shape 
+y1 = y1.reshape(-1,1)
+onehot = OneHotEncoder(sparse=True)
+Y1 = onehot.fit_transform(y1)
+Y1.shape
+
+
+
+model.save(&#39;/content/drive/MyDrive/result/NEW_RESULT&#39;)
+model =
+keras.models.load_model(&#39;/content/drive/MyDrive/result/new&#39;
+)
+from sklearn.datasets import make_blobs
+import numpy as np
+from sklearn.model_selection import train_test_split
+X = np.array(images)
+X1 = np.array(testimages)
+x_train = X
+y_train = Y
+x_test = X
+y_test = Y
+x_test1 = x_test/255.0
+Ypred = model.predict(x_test1)
+Ypred = np.argmax(Ypred, axis=1)
+Ytrue = np.argmax(y_test, axis=1)
+cm = confusion_matrix(Ytrue, Ypred)
+plt.figure(figsize=(12, 12))
+ax = sns.heatmap(cm, cmap=&quot;rocket_r&quot;,
+fmt=&quot;.01f&quot;,annot_kws={&#39;size&#39;:16}, annot=True, square=True,)
+ax.set_ylabel(&#39;Actual&#39;, fontsize=20)
+ax.set_xlabel(&#39;Predicted&#39;, fontsize=20)
+print(Ytrue)
+print(Ypred)
+from sklearn.metrics import precision_score
+print(&#39;Precision: %.3f&#39; % precision_score(Ytrue,
+Ypred,average=&quot;micro&quot;))
+from sklearn.metrics import recall_score
+recall = recall_score(Ytrue, Ypred, average=&#39;micro&#39;)
+print(recall)
+from sklearn.metrics import mean_squared_error
+plt.figure(0)
+plt.plot(hist.history[&#39;accuracy&#39;],&#39;r&#39;)
+plt.plot(hist.history[&#39;val_accuracy&#39;],&#39;g&#39;)
+plt.xticks(np.arange(0, 10, 1.0))
+plt.rcParams[&#39;figure.figsize&#39;] = (8, 6)
+plt.xlabel(&quot;Num of Epochs&quot;)
+plt.ylabel(&quot;Accuracy&quot;)
+plt.title(&quot;Training Accuracy vs Validation Accuracy&quot;)
+plt.legend([&#39;train&#39;,&#39;validation&#39;])
+ 
+plt.figure(1)
+
+plt.plot(hist.history[&#39;loss&#39;],&#39;r&#39;)
+plt.plot(hist.history[&#39;val_loss&#39;],&#39;g&#39;)
+plt.xticks(np.arange(0, 10, 1.0))
+plt.rcParams[&#39;figure.figsize&#39;] = (8, 6)
+plt.xlabel(&quot;Num of Epochs&quot;)
+plt.ylabel(&quot;Loss&quot;)
+plt.title(&quot;Training Loss vs Validation Loss&quot;)
+plt.legend([&#39;train&#39;,&#39;validation&#39;])
+
+ 
+plt.show()
+from sklearn import metrics
+Ytrue = np.argmax(y_test, axis=0)
+print(Ytrue.shape)
+Ypred = model.predict(x_test1)
+Ypred = np.argmax(Ypred,axis=1)
+print(Ypred.shape)
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(Ytrue, Ypred)
+print(cm)
+from sklearn.metrics import classification_report
+print(classification_report(Ytrue,Ypred))
+from sklearn.metrics import r2_score
+print(r2_score(Ytrue,Ypred))
+pred = model.predict(test_iterator)
+Ypred = np.argmax(pred, axis=1)
+print(Ypred)
+Ytrue = np.argmax(test_iterator, axis=1)
+print(Ytrue)
+from google.colab import drive
+drive.mount(&#39;/content/drive&#39;)
