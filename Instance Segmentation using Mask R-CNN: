@@ -45,7 +45,6 @@ InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml&quot;)  
   return cfg
 def training(cfg):
 
-15
 
   os.makedirs(cfg.OUTPUT_DIR, exist_ok = True)
   trainer = DefaultTrainer(cfg)
@@ -89,7 +88,7 @@ os.path.join(config_params.OUTPUT_DIR, weights)
 config_params.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7
 predictor = DefaultPredictor(config_params)
 
-16
+
 &quot;&quot;&quot;Evaluating the trained model&quot;&quot;&quot;
 evaluating_coco(predictor = predictor, test_data =
 testing_data, cfg = config_params)
